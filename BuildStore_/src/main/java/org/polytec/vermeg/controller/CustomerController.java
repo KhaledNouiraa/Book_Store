@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.polytec.vermeg.model.Book;
 
 import org.polytec.vermeg.model.Customer;
-import org.polytec.vermeg.service.BookService;
+import org.polytec.vermeg.service.BookServiceImp;
 import org.polytec.vermeg.service.CustomerService;
+import org.polytec.vermeg.service.CustomerServiceImp;
+
+
 
 @RestController
 @RequestMapping("/api/Customer")
