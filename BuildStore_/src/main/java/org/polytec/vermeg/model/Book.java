@@ -37,12 +37,20 @@ public class Book {
 	@Column(name="date")
 	private Date date ;
 	
-	@OneToMany(mappedBy="book" ,cascade = CascadeType.ALL)
-    private List<OrderLine> orderLine = new ArrayList<OrderLine>();
-	
+
 		public Book() {
 
 }
+		
+		public Book(int id, String author, String title, double price_unit, int quantity) {
+			super();
+			this.id = id;
+			Author = author;
+			this.title = title;
+			this.price_unit = price_unit;
+			this.quantity = quantity;
+		}
+
 		public String getAuthor() {
 	return Author;
 }

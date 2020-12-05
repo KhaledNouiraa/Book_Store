@@ -18,7 +18,7 @@ public class OrderServiceImp implements OrderService {
 	OrderDAO orderDao;
 	
 	@Override
-	
+	@Transactional
 	public List<Order> getOrders() {
 		return orderDao.getAllOrders();
 	}

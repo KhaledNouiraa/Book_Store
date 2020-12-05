@@ -33,8 +33,6 @@ public class Order{
 	private int id_user ;
 	
 
-	@OneToMany(mappedBy="orders" ,cascade = CascadeType.ALL)
-    private List<OrderLine> orderLine;
 	@Column(name="total")
 	private Double total ;
 	@Column(name="date")
@@ -43,16 +41,29 @@ public class Order{
 	public Order() {
 		// TODO Auto-generated constructor stub
 	}
+	public Order( int id ) {
+		this.id_orders  = id ;
+	}
+
+
+	public Order(int id_orders, int id_user ) {
 	
-
-
-	public List<OrderLine> getOrderLine() {
-		return orderLine;
+		this.id_orders = id_orders;
+		this.id_user = id_user;
+	
+		
 	}
 
-	public void setOrderLine(List<OrderLine> orderLine) {
-		this.orderLine = orderLine;
+	public Order(int id_orders, int id_user ,double total ) {
+		this.total=total ;
+		this.id_orders = id_orders;
+		this.id_user = id_user;
+	
+		
 	}
+
+
+
 
 	public int getId_orders() {
 		return id_orders;

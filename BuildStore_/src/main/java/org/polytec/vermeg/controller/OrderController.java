@@ -27,8 +27,7 @@ public class OrderController {
 	@Autowired
 	OrderService orderService;
 	
-	@Autowired
-	CustomerController customerController;
+
 	 
 	@RequestMapping(value = "/all", method = RequestMethod.GET, produces = "application/json")
     public String sayHello(){
@@ -57,8 +56,8 @@ public class OrderController {
 
 	
 
-	@RequestMapping(value = "/addOrder/{idCust}", method = RequestMethod.POST, headers = "Accept=application/json")
-	public Order addOrder(@RequestBody Order order ,@PathVariable int idCust) {
+	@RequestMapping(value = "/addOrder", method = RequestMethod.POST, headers = "Accept=application/json")
+	public Order addOrder(@RequestBody Order order ) {
 
 	
 		

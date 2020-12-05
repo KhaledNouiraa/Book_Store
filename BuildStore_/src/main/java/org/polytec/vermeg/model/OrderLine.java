@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name="orderLine")
 public class OrderLine {
@@ -19,14 +21,25 @@ public class OrderLine {
 	
 	int id_Line ;
 	int quantity_line ;
-	 @ManyToOne(fetch =FetchType.LAZY)
+	@JsonIgnore
+	 @ManyToOne(fetch =FetchType.EAGER)
 	    @JoinColumn(name="id_Book")
 	    private Book book;
-	 @ManyToOne(fetch =FetchType.LAZY)
+	@JsonIgnore
+	 @ManyToOne(fetch =FetchType.EAGER)
 	    @JoinColumn(name="id_Order" )
 	    private Order orders;
 	
-	 @Column(name="Total")
+	 public OrderLine(int id_Line, int quantity_line, Book book, Order orders, double total) {
+		super();
+		this.id_Line = id_Line;
+		this.quantity_line = quantity_line;
+		this.book = book;
+		this.orders = orders;
+		this.total = total;
+	}
+
+	@Column(name="Total")
 	 double total ;
 	
 	
@@ -34,12 +47,12 @@ public class OrderLine {
 
 
 
-	public OrderLine( int quantity_line, Book book, Order orders, double total) {
-		
+	public OrderLine( int id , int quantity_line) {
+		 this.id_Line = id ;
 		this.quantity_line = quantity_line;
-		 book.getId();
-		orders.getId_orders();
-		this.total = total;
+		this.book =book ;
+	
+		
 	}
 
 	public OrderLine() {
