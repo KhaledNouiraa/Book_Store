@@ -30,6 +30,15 @@ public class OrderLine {
 	    @JoinColumn(name="id_Order" )
 	    private Order orders;
 	
+	 public OrderLine(int id_Line, int quantity_line, Book book, Order orders) {
+		super();
+		this.id_Line = id_Line;
+		this.quantity_line = quantity_line;
+		this.book = book;
+		this.orders = orders;
+	}
+
+	 
 	 public OrderLine(int id_Line, int quantity_line, Book book, Order orders, double total) {
 		super();
 		this.id_Line = id_Line;

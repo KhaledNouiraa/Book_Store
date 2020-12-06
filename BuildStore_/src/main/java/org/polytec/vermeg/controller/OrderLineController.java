@@ -32,7 +32,8 @@ public class OrderLineController {
 	OrderLineService orderLineService;
 	
 	@Autowired 
-	BookService bookServce ;
+	
+	BookService bookService ;
 	@Autowired
 	
 	OrderService orderService ; 
@@ -65,12 +66,14 @@ public class OrderLineController {
 		orderline.setOrders(orderService.getOrder(orderService.getCount()));
 		
 		// get by id Book 
-		orderline.setBook(bookServce.getBook(idBook));
+		orderline.setBook(bookService.getBook(idBook));
+		bookService.getBook(idBook).getPrice_unit() ;
 		
 		//Calculate total  OrderLine
-		orderline.setTotal(orderLineService.calculate(bookServce.getBook(idBook).getPrice_unit(), orderline.getQuantity_line()));
+		orderline.setTotal(orderLineService.calculate(bookService.getBook(idBook).getPrice_unit(), orderline.getQuantity_line()));
 		// Calculate total of  current Order
-		orderline.getOrders().setTotal(orderline.getTotal()+orderline.getOrders().getTotal());
+		
+		//orderline.getOrders().setTotal(orderline.getTotal()+orderline.getOrders().getTotal());
 		
 		//update total in  Order table 
 		
@@ -82,7 +85,7 @@ public class OrderLineController {
 		orderService.saveOrder(orderline.getOrders());
 		return orderline;
 	}
-	@RequestMapping(value = "/updateBook", method = RequestMethod.POST, headers = "Accept=application/json")
+	@RequestMapping(value = "/updateLine", method = RequestMethod.POST, headers = "Accept=application/json")
 	public OrderLine  updateOrder(@RequestBody OrderLine order) {
 		
 		orderLineService.saveOrderLine(order);;

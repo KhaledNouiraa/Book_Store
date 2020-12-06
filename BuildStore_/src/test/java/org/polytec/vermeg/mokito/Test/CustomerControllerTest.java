@@ -69,11 +69,11 @@ class CustomerControllerTest {
 	
 		customers.add(new Customer("poly 1",1));
 		customers.add(new Customer("poly 2",2));
-	given (customerService.getAllCustomers()).willReturn((List)customers ) ;
-	 mockMvc.perform(get("/api/Customer/getAll"))
-     .andExpect(status().isOk())
-     .andExpect(jsonPath("$", hasSize(2)))
-     .andDo(MockMvcResultHandlers.print());
+		given (customerService.getAllCustomers()).willReturn((List)customers ) ;
+		mockMvc.perform(get("/api/Customer/getAll"))
+	 		.andExpect(status().isOk())
+	 		.andExpect(jsonPath("$", hasSize(2)))
+	 		.andDo(MockMvcResultHandlers.print());
 	 										
 	}
 	
@@ -84,8 +84,8 @@ class CustomerControllerTest {
 		Customer customer = new Customer("poly 1",1) ;
 		when(customerService.getCustomer(idCustomer)).thenReturn(customer);
 		mockMvc.perform(get("/api/Customer/getCustomer/1"))
-				.andExpect(status().isOk()) 
-				   .andExpect(jsonPath("$.id", is(customer.getId())))
+				 .andExpect(status().isOk()) 
+				 .andExpect(jsonPath("$.id", is(customer.getId())))
 		 .andDo(MockMvcResultHandlers.print());
 	}
 	
@@ -107,13 +107,13 @@ class CustomerControllerTest {
 	    }
 	
 	
-@Test 
-void testUpdateCustomer () throws Exception {
-	
-	
+	@Test 
+	void testUpdateCustomer () throws Exception {
+		
+		
 
-	Customer customer = new  Customer(5 ,"khaled", "Nouira", "@gmail.com");
-	   mockMvc.perform(post("/api/Customer/updateCustomer")
+		Customer customer = new  Customer(5 ,"khaled", "Nouira", "@gmail.com");
+	    mockMvc.perform(post("/api/Customer/updateCustomer")
                .contentType(MediaType.APPLICATION_JSON)
                .content(new ObjectMapper().writeValueAsString(customer)))
            .andExpect(status().isOk())
@@ -123,17 +123,17 @@ void testUpdateCustomer () throws Exception {
 		   
 }
 
-@Test
-void shouldDeleteUser() throws Exception {
-    int userId = 1;
-    Customer user = new Customer(userId, "user1@gmail.com", "pwd", "Name");
-    given(customerService.getCustomer(userId)).willReturn(user);
-    doNothing().when(customerService).deleteCustomer(user.getId());
-
-    this.mockMvc.perform(get("/api/Customer/deleteCustomer/{id}", user.getId()))
-            .andExpect(status().isOk())
-          .andDo(print());
-
-}
+		@Test
+		void testDeleteCustomer() throws Exception {
+		    int userId = 1;
+		    Customer user = new Customer(userId, "user1@gmail.com", "pwd", "Name");
+		    given(customerService.getCustomer(userId)).willReturn(user);
+		    doNothing().when(customerService).deleteCustomer(user.getId());
+		
+		    this.mockMvc.perform(get("/api/Customer/deleteCustomer/{id}", user.getId()))
+		            .andExpect(status().isOk())
+		            .andDo(print());
+		
+		}
 
 }

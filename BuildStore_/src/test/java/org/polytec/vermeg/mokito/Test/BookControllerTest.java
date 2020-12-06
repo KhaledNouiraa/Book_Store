@@ -112,13 +112,13 @@ class BookControllerTest {
 	    }
 	
 	
-@Test 
-void testUpdateBook () throws Exception { 
+	@Test 
+	void testUpdateBook () throws Exception { 
 	
 	
 
-	Book book = new  Book();
-	   mockMvc.perform(post("/api/book/updateBook")
+		Book book = new  Book();
+		mockMvc.perform(post("/api/book/updateBook")
                .contentType(MediaType.APPLICATION_JSON)
                .content(new ObjectMapper().writeValueAsString(book)))
            .andExpect(status().isOk())
@@ -128,16 +128,16 @@ void testUpdateBook () throws Exception {
 		   
 }
 
-@Test 
-void shouldDeleteBook() throws Exception {
-    int bookid = 1;
-    Book book = new Book();
-    given(bookService.getBook(bookid)).willReturn(book);
-    doNothing().when(bookService).deleteBook(book.getId());
+	@Test 
+	void testDeleteBook() throws Exception {
+		int bookid = 1;
+		Book book = new Book();
+		given(bookService.getBook(bookid)).willReturn(book);
+		doNothing().when(bookService).deleteBook(book.getId());
 
-    this.mockMvc.perform(get("/api/book/deleteBook/{id}", book.getId()))
+		mockMvc.perform(get("/api/book/deleteBook/{id}", book.getId()))
             .andExpect(status().isOk())
-          .andDo(print());
+            .andDo(print());
 
 }
 

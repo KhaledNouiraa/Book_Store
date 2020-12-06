@@ -60,6 +60,7 @@ class LineControlerTest {
 	private OrderService orderService ;
 	@Mock 
 	private BookService bookService ;
+	
 	@InjectMocks  
 	private OrderLineController lineController ;
 	
@@ -98,7 +99,8 @@ class LineControlerTest {
 		when(lineService.getOrderLine(idOrderLine)).thenReturn(ol);
 		mockMvc.perform(get("/api/line/getLine/1"))
 				.andExpect(status().isOk()) 
-			
+				.andExpect(jsonPath("$.quantity_line", is(ol.getQuantity_line())))
+	            .andExpect(jsonPath("$.total", is(ol.getTotal())))
 		 .andDo(MockMvcResultHandlers.print());
 	} 
 	
@@ -106,29 +108,35 @@ class LineControlerTest {
 	@Test 
 	void testAddLineOrder () throws Exception {
 		
-		
-
-		Customer customer = new  Customer(  1 ,"khaled", "Nouira", "@gmail.com");
+	  Customer customer = new  Customer(  1 ,"khaled", "Nouira", "@gmail.com");
 
 	  Book book  = new Book(1, "khaled", "test", 10, 10) ;
-	  Order order  = new Order(1, 1);
-		OrderLine orderline = new OrderLine(1, 10)  ;
-	       mockMvc.perform(post("/api/line/addLine/1")
+	  
+	  Order order  = new Order(1, 1,1);
+	  
+	  OrderLine orderLine = new OrderLine(1, 20, book, order) ;
+	 orderLine.setTotal( lineService.calculate(book.getPrice_unit(),orderLine.getQuantity_line())) ;
+	  
+	  given(orderService.getOrder(1)).willReturn(order);
+	  given(bookService.getBook(1)).willReturn(book);
+	     mockMvc.perform(post("/api/line/addLine/1")
 	                .contentType(MediaType.APPLICATION_JSON)
-	                .content(new ObjectMapper().writeValueAsString(orderline)))
+	                .content(new ObjectMapper().writeValueAsString(orderLine)))
+	       
 	            .andExpect(status().isOk())
+	            .andExpect(jsonPath("$.quantity_line", is(orderLine.getQuantity_line())))
 	            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
 	            .andDo(print());
 	    }
 	
-	@Disabled
-@Test 
-void testUpdateLine () throws Exception {
+	
+		@Test 
+		void testUpdateLine () throws Exception {
 	
 	  
 
-	OrderLine line = new  OrderLine();
-	   mockMvc.perform(post("/api/line/updateLine")
+			OrderLine line = new  OrderLine(1, 10);
+			mockMvc.perform(post("/api/line/updateLine")
                .contentType(MediaType.APPLICATION_JSON)
                .content(new ObjectMapper().writeValueAsString(line)))
            .andExpect(status().isOk())
@@ -138,16 +146,16 @@ void testUpdateLine () throws Exception {
 		   
 }
 
-@Test
-void shouldDeleteLine() throws Exception {
-    int LineId = 1;
-    OrderLine line = new OrderLine(1, 10)  ;
-    given(lineService.getOrderLine(LineId)).willReturn(line);
-    doNothing().when(lineService).deleteOrderLine(line.getId_Line());
+		@Test
+		void testDeleteLine() throws Exception {
+			int LineId = 1;
+			OrderLine line = new OrderLine(1, 10)  ;
+			given(lineService.getOrderLine(LineId)).willReturn(line);
+			doNothing().when(lineService).deleteOrderLine(line.getId_Line());
 
-    this.mockMvc.perform(get("/api/line/deleteLine/{id}", line.getId_Line()))
+			mockMvc.perform(get("/api/line/deleteLine/{id}", line.getId_Line()))
             .andExpect(status().isOk())
-          .andDo(print());
+            .andDo(print());
 
 } 
 
