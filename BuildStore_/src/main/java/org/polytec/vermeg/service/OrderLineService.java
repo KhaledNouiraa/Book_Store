@@ -16,4 +16,5 @@ public interface OrderLineService {
 	public void saveOrderLine(OrderLine order) ;
 
 	public void deleteOrderLine(int theId) ;
+	public void deleteAllLine() ;
 }

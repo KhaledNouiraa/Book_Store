@@ -53,4 +53,11 @@ public class OrderLineServiceImp implements OrderLineService{
 		
 		lineDao.deleteLine(theId);
 	}
+	
+	@Override
+	@Transactional
+	public void deleteAllLine() {
+		
+		lineDao.deleteAllLine();
+	}
 }

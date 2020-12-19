@@ -16,4 +16,5 @@ public interface OrderLineDAO {
 	public void deleteLine(int theId);
 
 	public void saveOrderLine (OrderLine orderLine) ;
+	public void deleteAllLine() ;
 }

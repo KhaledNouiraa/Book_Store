@@ -20,7 +20,7 @@ public class Book {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id_book")
-	private int id ;
+	 int id ;
 	
 	@Column(name="author")
 	private String  Author ;

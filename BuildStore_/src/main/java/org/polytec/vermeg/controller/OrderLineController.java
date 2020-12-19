@@ -13,6 +13,7 @@ import org.polytec.vermeg.service.OrderServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/line")
 
 public class OrderLineController {
@@ -73,8 +75,8 @@ public class OrderLineController {
 		orderline.setTotal(orderLineService.calculate(bookService.getBook(idBook).getPrice_unit(), orderline.getQuantity_line()));
 		// Calculate total of  current Order
 		
-		//orderline.getOrders().setTotal(orderline.getTotal()+orderline.getOrders().getTotal());
-		
+		orderline.getOrders().setTotal(orderline.getTotal()+orderline.getOrders().getTotal());
+	
 		//update total in  Order table 
 		
 		orderline.setId_Line(0);
@@ -83,9 +85,10 @@ public class OrderLineController {
 		orderLineService.saveOrderLine(orderline );
 		
 		orderService.saveOrder(orderline.getOrders());
+		
 		return orderline;
 	}
-	@RequestMapping(value = "/updateLine", method = RequestMethod.POST, headers = "Accept=application/json")
+	@RequestMapping(value = "/updateLine", method = RequestMethod.PUT, headers = "Accept=application/json")
 	public OrderLine  updateOrder(@RequestBody OrderLine order) {
 		
 		orderLineService.saveOrderLine(order);;
@@ -96,10 +99,21 @@ public class OrderLineController {
 	
 
 
-	@RequestMapping(value = "/deleteLine/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/deleteLine/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
 	public String deleteOrder(@PathVariable("id") int id) {
+	
 		orderLineService.deleteOrderLine(id);
+
 		 return "Delete Done";
 
 	}	
+	
+	@RequestMapping(value = "/deleteAllLine", method = RequestMethod.DELETE, headers = "Accept=application/json")
+	public String deleteAllLine() {
+	
+		orderLineService.deleteAllLine();
+
+		 return "Delete Done";
+
+	}
 }

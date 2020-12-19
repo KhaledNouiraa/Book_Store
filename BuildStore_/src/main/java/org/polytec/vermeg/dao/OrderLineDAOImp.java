@@ -70,6 +70,20 @@ public class OrderLineDAOImp implements OrderLineDAO {
 			theQuery.executeUpdate();		
 			
 		}	
+		@Override
+		public void deleteAllLine() {
+
+			
+			Session currentSession = sessionFactory.getCurrentSession();
+			
+		
+			Query theQuery = 
+					currentSession.createQuery("delete from OrderLine ");
+			
+			
+			theQuery.executeUpdate();		
+			
+		}
 	}
 
 
