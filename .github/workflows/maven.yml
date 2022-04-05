@@ -23,7 +23,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: get project
-      run: cd Book_Store/BuildStore_
+      run: cd home/runner/work/Book_Store/Book_Store/BuildStore_
     - name: Build with Maven
       run: mvn clean install
       
