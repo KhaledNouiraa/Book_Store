@@ -22,5 +22,8 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
+    - name: get project
+      run: cd Book_Store/BuildStore_
     - name: Build with Maven
       run: mvn clean install
+      
